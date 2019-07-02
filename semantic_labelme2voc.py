@@ -15,13 +15,24 @@ import PIL.Image
 import labelme
 import progressbar
 
-def main():
-    parser = argparse.ArgumentParser(
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('labels_file')
-    parser.add_argument('in_dir', help='input dir with annotated files')
-    parser.add_argument('out_dir', help='output dataset directory')
-    args = parser.parse_args()
+def sem_l2v(args):
+    print('sem_l2v')
+    print(args)
+    args1={
+    'labels_file':args[0],
+    'in_dir':args[1],
+    'out_dir':args[2]}
+    from argparse import Namespace
+    ns = Namespace(**args1)
+    return sem_l2v_main(ns)
+
+def sem_l2v_main(args):
+    #parser = argparse.ArgumentParser(
+    #    formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    #parser.add_argument('labels_file')
+    #parser.add_argument('in_dir', help='input dir with annotated files')
+    #parser.add_argument('out_dir', help='output dataset directory')
+    #args = parser.parse_args()
 
     if osp.exists(args.out_dir):
         print('Output directory already exists:', args.out_dir)
@@ -90,5 +101,5 @@ def main():
             PIL.Image.fromarray(viz).save(out_viz_file)
 
 
-if __name__ == '__main__':
-    main()
+#if __name__ == '__main__':
+ #   main()
