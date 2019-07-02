@@ -65,7 +65,7 @@ def sem_l2v_main(args):
     class_names = tuple(class_names)
     print('class_names:', class_names)
     out_class_names_file = osp.join(args.out_dir, 'class_names.txt')
-    with open(out_class_names_file, 'w') as f:
+    with open(out_class_names_file, 'w+') as f:
         f.writelines('\n'.join(class_names))
     print('Saved class_names:', out_class_names_file)
 

@@ -1,0 +1,610 @@
+diff --git a/launcher.py b/launcher.py
+new file mode 100644
+index 0000000..74ee083
+--- /dev/null
++++ b/launcher.py
+@@ -0,0 +1,41 @@
++
++
++from PyQt5 import QtWidgets, QtGui
++import sys
++
++
++from launcher_ui_concrate import Ui_Dialog_launcher
++
++
++def main():
++    app = QtWidgets.QApplication(sys.argv)
++    MainWindow = QtWidgets.QMainWindow()
++    ui = Ui_Dialog_launcher()
++
++    ui.setupUi(MainWindow)
++    ui.register_action_do_conv_hanler(action_do_conv_hanler)
++
++    MainWindow.show()
++    sys.exit(app.exec_()) 
++
++def action_do_conv_hanler(uiobj,*args):
++    print('action_do_conv_hanler')
++    print(args)
++    from semantic_labelme2voc import sem_l2v
++    try:
++        r=sem_l2v(args)
++        uiobj.log('sem_l2v success')
++    except Exception as e:
++        uiobj.log('sem_l2v failed')
++        print(e)
++        import traceback
++        info = traceback.format_exc()
++        print(info)
++    #lable_cn_pathstr
++#lable_cnen_pathstr
++#inputdir_pathstr
++#outputdir_pathstr
++
++
++if __name__ == '__main__': 
++    main()
+\ No newline at end of file
+diff --git a/launcher.ui b/launcher.ui
+new file mode 100644
+index 0000000..6b29550
+--- /dev/null
++++ b/launcher.ui
+@@ -0,0 +1,215 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<ui version="4.0">
++ <class>Dialog</class>
++ <widget class="QDialog" name="Dialog">
++  <property name="geometry">
++   <rect>
++    <x>0</x>
++    <y>0</y>
++    <width>497</width>
++    <height>375</height>
++   </rect>
++  </property>
++  <property name="windowTitle">
++   <string>AIHub datasheet formater</string>
++  </property>
++  <widget class="QPushButton" name="inputdir_btn">
++   <property name="geometry">
++    <rect>
++     <x>250</x>
++     <y>20</y>
++     <width>101</width>
++     <height>71</height>
++    </rect>
++   </property>
++   <property name="font">
++    <font>
++     <family>Agency FB</family>
++     <pointsize>18</pointsize>
++     <weight>75</weight>
++     <bold>true</bold>
++    </font>
++   </property>
++   <property name="styleSheet">
++    <string notr="true">background-color:rgb(255, 127, 127)</string>
++   </property>
++   <property name="text">
++    <string>input dir</string>
++   </property>
++  </widget>
++  <widget class="QLineEdit" name="inputdir_textview">
++   <property name="geometry">
++    <rect>
++     <x>10</x>
++     <y>160</y>
++     <width>461</width>
++     <height>20</height>
++    </rect>
++   </property>
++   <property name="styleSheet">
++    <string notr="true">background-color:rgb(255, 127, 127)</string>
++   </property>
++  </widget>
++  <widget class="QPushButton" name="lable_cn_btn">
++   <property name="geometry">
++    <rect>
++     <x>10</x>
++     <y>20</y>
++     <width>101</width>
++     <height>71</height>
++    </rect>
++   </property>
++   <property name="font">
++    <font>
++     <family>Agency FB</family>
++     <pointsize>18</pointsize>
++     <weight>75</weight>
++     <bold>true</bold>
++    </font>
++   </property>
++   <property name="styleSheet">
++    <string notr="true">background-color:rgb(0, 255, 127)</string>
++   </property>
++   <property name="text">
++    <string>label cn</string>
++   </property>
++  </widget>
++  <widget class="QPushButton" name="lable_cnen_btn">
++   <property name="geometry">
++    <rect>
++     <x>120</x>
++     <y>20</y>
++     <width>121</width>
++     <height>71</height>
++    </rect>
++   </property>
++   <property name="font">
++    <font>
++     <family>Agency FB</family>
++     <pointsize>18</pointsize>
++     <weight>75</weight>
++     <bold>true</bold>
++    </font>
++   </property>
++   <property name="styleSheet">
++    <string notr="true">background-color:rgb(255, 255, 127)</string>
++   </property>
++   <property name="text">
++    <string>label cn2en</string>
++   </property>
++  </widget>
++  <widget class="QPushButton" name="outputdir_btn">
++   <property name="geometry">
++    <rect>
++     <x>360</x>
++     <y>20</y>
++     <width>121</width>
++     <height>71</height>
++    </rect>
++   </property>
++   <property name="font">
++    <font>
++     <family>Agency FB</family>
++     <pointsize>18</pointsize>
++     <weight>75</weight>
++     <bold>true</bold>
++    </font>
++   </property>
++   <property name="styleSheet">
++    <string notr="true">background-color:rgb(255, 127, 255)</string>
++   </property>
++   <property name="text">
++    <string>output dir</string>
++   </property>
++  </widget>
++  <widget class="QLineEdit" name="lable_cn_textview">
++   <property name="geometry">
++    <rect>
++     <x>10</x>
++     <y>100</y>
++     <width>461</width>
++     <height>20</height>
++    </rect>
++   </property>
++   <property name="styleSheet">
++    <string notr="true">background-color:rgb(0, 255, 127)</string>
++   </property>
++  </widget>
++  <widget class="QLineEdit" name="lable_cnen_textview">
++   <property name="geometry">
++    <rect>
++     <x>10</x>
++     <y>130</y>
++     <width>461</width>
++     <height>20</height>
++    </rect>
++   </property>
++   <property name="styleSheet">
++    <string notr="true">background-color:rgb(255, 255, 127)</string>
++   </property>
++  </widget>
++  <widget class="QLineEdit" name="outputdir_textview">
++   <property name="geometry">
++    <rect>
++     <x>10</x>
++     <y>190</y>
++     <width>451</width>
++     <height>20</height>
++    </rect>
++   </property>
++   <property name="styleSheet">
++    <string notr="true">background-color:rgb(255, 127, 255)</string>
++   </property>
++  </widget>
++  <widget class="QPlainTextEdit" name="result_out_textview">
++   <property name="geometry">
++    <rect>
++     <x>20</x>
++     <y>250</y>
++     <width>311</width>
++     <height>111</height>
++    </rect>
++   </property>
++  </widget>
++  <widget class="QLabel" name="label">
++   <property name="geometry">
++    <rect>
++     <x>20</x>
++     <y>220</y>
++     <width>121</width>
++     <height>21</height>
++    </rect>
++   </property>
++   <property name="font">
++    <font>
++     <family>Arial</family>
++     <pointsize>22</pointsize>
++    </font>
++   </property>
++   <property name="text">
++    <string>result</string>
++   </property>
++  </widget>
++  <widget class="QPushButton" name="action_do_conv">
++   <property name="geometry">
++    <rect>
++     <x>350</x>
++     <y>260</y>
++     <width>111</width>
++     <height>101</height>
++    </rect>
++   </property>
++   <property name="font">
++    <font>
++     <family>Arial</family>
++     <pointsize>20</pointsize>
++    </font>
++   </property>
++   <property name="text">
++    <string>start</string>
++   </property>
++  </widget>
++ </widget>
++ <resources/>
++ <connections/>
++</ui>
+diff --git a/launcher.ui.py b/launcher.ui.py
+new file mode 100644
+index 0000000..f3d9d41
+--- /dev/null
++++ b/launcher.ui.py
+@@ -0,0 +1,101 @@
++# -*- coding: utf-8 -*-
++
++# Form implementation generated from reading ui file 'luncher.ui'
++#
++# Created by: PyQt5 UI code generator 5.11.3
++#
++# WARNING! All changes made in this file will be lost!
++
++from PyQt5 import QtCore, QtGui, QtWidgets
++
++class Ui_Dialog(object):
++    def setupUi(self, Dialog):
++        Dialog.setObjectName("Dialog")
++        Dialog.resize(497, 375)
++        self.inputdir_btn = QtWidgets.QPushButton(Dialog)
++        self.inputdir_btn.setGeometry(QtCore.QRect(250, 20, 101, 71))
++        font = QtGui.QFont()
++        font.setFamily("Agency FB")
++        font.setPointSize(18)
++        font.setBold(True)
++        font.setWeight(75)
++        self.inputdir_btn.setFont(font)
++        self.inputdir_btn.setStyleSheet("background-color:rgb(255, 127, 127)")
++        self.inputdir_btn.setObjectName("inputdir_btn")
++        self.inputdir_textview = QtWidgets.QLineEdit(Dialog)
++        self.inputdir_textview.setGeometry(QtCore.QRect(10, 160, 461, 20))
++        self.inputdir_textview.setStyleSheet("background-color:rgb(255, 127, 127)")
++        self.inputdir_textview.setObjectName("inputdir_textview")
++        self.lable_cn_btn = QtWidgets.QPushButton(Dialog)
++        self.lable_cn_btn.setGeometry(QtCore.QRect(10, 20, 101, 71))
++        font = QtGui.QFont()
++        font.setFamily("Agency FB")
++        font.setPointSize(18)
++        font.setBold(True)
++        font.setWeight(75)
++        self.lable_cn_btn.setFont(font)
++        self.lable_cn_btn.setStyleSheet("background-color:rgb(0, 255, 127)")
++        self.lable_cn_btn.setObjectName("lable_cn_btn")
++        self.lable_cnen_btn = QtWidgets.QPushButton(Dialog)
++        self.lable_cnen_btn.setGeometry(QtCore.QRect(120, 20, 121, 71))
++        font = QtGui.QFont()
++        font.setFamily("Agency FB")
++        font.setPointSize(18)
++        font.setBold(True)
++        font.setWeight(75)
++        self.lable_cnen_btn.setFont(font)
++        self.lable_cnen_btn.setStyleSheet("background-color:rgb(255, 255, 127)")
++        self.lable_cnen_btn.setObjectName("lable_cnen_btn")
++        self.outputdir_btn = QtWidgets.QPushButton(Dialog)
++        self.outputdir_btn.setGeometry(QtCore.QRect(360, 20, 121, 71))
++        font = QtGui.QFont()
++        font.setFamily("Agency FB")
++        font.setPointSize(18)
++        font.setBold(True)
++        font.setWeight(75)
++        self.outputdir_btn.setFont(font)
++        self.outputdir_btn.setStyleSheet("background-color:rgb(255, 127, 255)")
++        self.outputdir_btn.setObjectName("outputdir_btn")
++        self.lable_cn_textview = QtWidgets.QLineEdit(Dialog)
++        self.lable_cn_textview.setGeometry(QtCore.QRect(10, 100, 461, 20))
++        self.lable_cn_textview.setStyleSheet("background-color:rgb(0, 255, 127)")
++        self.lable_cn_textview.setObjectName("lable_cn_textview")
++        self.lable_cnen_textview = QtWidgets.QLineEdit(Dialog)
++        self.lable_cnen_textview.setGeometry(QtCore.QRect(10, 130, 461, 20))
++        self.lable_cnen_textview.setStyleSheet("background-color:rgb(255, 255, 127)")
++        self.lable_cnen_textview.setObjectName("lable_cnen_textview")
++        self.outputdir_textview = QtWidgets.QLineEdit(Dialog)
++        self.outputdir_textview.setGeometry(QtCore.QRect(10, 190, 451, 20))
++        self.outputdir_textview.setStyleSheet("background-color:rgb(255, 127, 255)")
++        self.outputdir_textview.setObjectName("outputdir_textview")
++        self.result_out_textview = QtWidgets.QPlainTextEdit(Dialog)
++        self.result_out_textview.setGeometry(QtCore.QRect(20, 250, 311, 111))
++        self.result_out_textview.setObjectName("result_out_textview")
++        self.label = QtWidgets.QLabel(Dialog)
++        self.label.setGeometry(QtCore.QRect(20, 220, 121, 21))
++        font = QtGui.QFont()
++        font.setFamily("Arial")
++        font.setPointSize(22)
++        self.label.setFont(font)
++        self.label.setObjectName("label")
++        self.action_do_conv = QtWidgets.QPushButton(Dialog)
++        self.action_do_conv.setGeometry(QtCore.QRect(350, 260, 111, 101))
++        font = QtGui.QFont()
++        font.setFamily("Arial")
++        font.setPointSize(20)
++        self.action_do_conv.setFont(font)
++        self.action_do_conv.setObjectName("action_do_conv")
++
++        self.retranslateUi(Dialog)
++        QtCore.QMetaObject.connectSlotsByName(Dialog)
++
++    def retranslateUi(self, Dialog):
++        _translate = QtCore.QCoreApplication.translate
++        Dialog.setWindowTitle(_translate("Dialog", "AIHub datasheet formater"))
++        self.inputdir_btn.setText(_translate("Dialog", "input dir"))
++        self.lable_cn_btn.setText(_translate("Dialog", "label cn"))
++        self.lable_cnen_btn.setText(_translate("Dialog", "label cn2en"))
++        self.outputdir_btn.setText(_translate("Dialog", "output dir"))
++        self.label.setText(_translate("Dialog", "result"))
++        self.action_do_conv.setText(_translate("Dialog", "start"))
++
+diff --git a/launcher_ui.py b/launcher_ui.py
+new file mode 100644
+index 0000000..f3d9d41
+--- /dev/null
++++ b/launcher_ui.py
+@@ -0,0 +1,101 @@
++# -*- coding: utf-8 -*-
++
++# Form implementation generated from reading ui file 'luncher.ui'
++#
++# Created by: PyQt5 UI code generator 5.11.3
++#
++# WARNING! All changes made in this file will be lost!
++
++from PyQt5 import QtCore, QtGui, QtWidgets
++
++class Ui_Dialog(object):
++    def setupUi(self, Dialog):
++        Dialog.setObjectName("Dialog")
++        Dialog.resize(497, 375)
++        self.inputdir_btn = QtWidgets.QPushButton(Dialog)
++        self.inputdir_btn.setGeometry(QtCore.QRect(250, 20, 101, 71))
++        font = QtGui.QFont()
++        font.setFamily("Agency FB")
++        font.setPointSize(18)
++        font.setBold(True)
++        font.setWeight(75)
++        self.inputdir_btn.setFont(font)
++        self.inputdir_btn.setStyleSheet("background-color:rgb(255, 127, 127)")
++        self.inputdir_btn.setObjectName("inputdir_btn")
++        self.inputdir_textview = QtWidgets.QLineEdit(Dialog)
++        self.inputdir_textview.setGeometry(QtCore.QRect(10, 160, 461, 20))
++        self.inputdir_textview.setStyleSheet("background-color:rgb(255, 127, 127)")
++        self.inputdir_textview.setObjectName("inputdir_textview")
++        self.lable_cn_btn = QtWidgets.QPushButton(Dialog)
++        self.lable_cn_btn.setGeometry(QtCore.QRect(10, 20, 101, 71))
++        font = QtGui.QFont()
++        font.setFamily("Agency FB")
++        font.setPointSize(18)
++        font.setBold(True)
++        font.setWeight(75)
++        self.lable_cn_btn.setFont(font)
++        self.lable_cn_btn.setStyleSheet("background-color:rgb(0, 255, 127)")
++        self.lable_cn_btn.setObjectName("lable_cn_btn")
++        self.lable_cnen_btn = QtWidgets.QPushButton(Dialog)
++        self.lable_cnen_btn.setGeometry(QtCore.QRect(120, 20, 121, 71))
++        font = QtGui.QFont()
++        font.setFamily("Agency FB")
++        font.setPointSize(18)
++        font.setBold(True)
++        font.setWeight(75)
++        self.lable_cnen_btn.setFont(font)
++        self.lable_cnen_btn.setStyleSheet("background-color:rgb(255, 255, 127)")
++        self.lable_cnen_btn.setObjectName("lable_cnen_btn")
++        self.outputdir_btn = QtWidgets.QPushButton(Dialog)
++        self.outputdir_btn.setGeometry(QtCore.QRect(360, 20, 121, 71))
++        font = QtGui.QFont()
++        font.setFamily("Agency FB")
++        font.setPointSize(18)
++        font.setBold(True)
++        font.setWeight(75)
++        self.outputdir_btn.setFont(font)
++        self.outputdir_btn.setStyleSheet("background-color:rgb(255, 127, 255)")
++        self.outputdir_btn.setObjectName("outputdir_btn")
++        self.lable_cn_textview = QtWidgets.QLineEdit(Dialog)
++        self.lable_cn_textview.setGeometry(QtCore.QRect(10, 100, 461, 20))
++        self.lable_cn_textview.setStyleSheet("background-color:rgb(0, 255, 127)")
++        self.lable_cn_textview.setObjectName("lable_cn_textview")
++        self.lable_cnen_textview = QtWidgets.QLineEdit(Dialog)
++        self.lable_cnen_textview.setGeometry(QtCore.QRect(10, 130, 461, 20))
++        self.lable_cnen_textview.setStyleSheet("background-color:rgb(255, 255, 127)")
++        self.lable_cnen_textview.setObjectName("lable_cnen_textview")
++        self.outputdir_textview = QtWidgets.QLineEdit(Dialog)
++        self.outputdir_textview.setGeometry(QtCore.QRect(10, 190, 451, 20))
++        self.outputdir_textview.setStyleSheet("background-color:rgb(255, 127, 255)")
++        self.outputdir_textview.setObjectName("outputdir_textview")
++        self.result_out_textview = QtWidgets.QPlainTextEdit(Dialog)
++        self.result_out_textview.setGeometry(QtCore.QRect(20, 250, 311, 111))
++        self.result_out_textview.setObjectName("result_out_textview")
++        self.label = QtWidgets.QLabel(Dialog)
++        self.label.setGeometry(QtCore.QRect(20, 220, 121, 21))
++        font = QtGui.QFont()
++        font.setFamily("Arial")
++        font.setPointSize(22)
++        self.label.setFont(font)
++        self.label.setObjectName("label")
++        self.action_do_conv = QtWidgets.QPushButton(Dialog)
++        self.action_do_conv.setGeometry(QtCore.QRect(350, 260, 111, 101))
++        font = QtGui.QFont()
++        font.setFamily("Arial")
++        font.setPointSize(20)
++        self.action_do_conv.setFont(font)
++        self.action_do_conv.setObjectName("action_do_conv")
++
++        self.retranslateUi(Dialog)
++        QtCore.QMetaObject.connectSlotsByName(Dialog)
++
++    def retranslateUi(self, Dialog):
++        _translate = QtCore.QCoreApplication.translate
++        Dialog.setWindowTitle(_translate("Dialog", "AIHub datasheet formater"))
++        self.inputdir_btn.setText(_translate("Dialog", "input dir"))
++        self.lable_cn_btn.setText(_translate("Dialog", "label cn"))
++        self.lable_cnen_btn.setText(_translate("Dialog", "label cn2en"))
++        self.outputdir_btn.setText(_translate("Dialog", "output dir"))
++        self.label.setText(_translate("Dialog", "result"))
++        self.action_do_conv.setText(_translate("Dialog", "start"))
++
+diff --git a/launcher_ui_concrate.py b/launcher_ui_concrate.py
+new file mode 100644
+index 0000000..00cc6f5
+--- /dev/null
++++ b/launcher_ui_concrate.py
+@@ -0,0 +1,76 @@
++from launcher_ui import Ui_Dialog
++from PyQt5.QtWidgets import QFileDialog
++
++class Ui_Dialog_launcher(Ui_Dialog):
++ 
++    def __init__(self):
++        super(Ui_Dialog,self).__init__()
++        self.lable_cn_pathstr=""
++        self.lable_cnen_pathstr=""
++        self.inputdir_pathstr=""
++        self.outputdir_pathstr=""
++
++        """
++        self.inputdir_btn.setFont(font)
++        self.inputdir_btn.setStyleSheet("background-color:rgb(255, 127, 127)")
++        self.inputdir_btn.setObjectName("inputdir_btn")
++        self.inputdir_textview = QtWidgets.QLineEdit(Dialog)
++        self.inputdir_textview.setGeometry(QtCore.QRect(10, 160, 461, 20))
++        self.inputdir_textview.setStyleSheet("background-color:rgb(255, 127, 127)")
++        self.inputdir_textview.setObjectName("inputdir_textview")
++        self.lable_cn_btn = QtWidgets.QPushButton(Dialog)
++        self.lable_cn_btn.setGeometry(QtCore.QRect(10, 20, 101, 71))
++        """
++    def setupUi(self, Dialog):
++        super().setupUi(Dialog)
++        #print(dir(super()))
++        #print(super().lable_cn_btn)
++        self.lable_cn_btn.clicked.connect(self.on_push_button_1_clicked)
++        self.lable_cnen_btn.clicked.connect(self.on_push_button_2_clicked)
++        self.inputdir_btn.clicked.connect(self.on_push_button_3_clicked)
++        self.outputdir_btn.clicked.connect(self.on_push_button_4_clicked)
++        self.action_do_conv.clicked.connect(self.on_push_button_5_clicked)
++
++    def on_push_button_1_clicked(self):
++        dir_path=QFileDialog.getExistingDirectory(self.lable_cn_btn,"choose lable_cn_btn","\\")
++        stra=dir_path#.toUtf8()#unicode(dir_path.toUtf8(), 'utf-8', 'ignore')
++        self.lable_cn_pathstr=stra
++        self.lable_cn_textview.setText(stra)
++
++    def on_push_button_2_clicked(self):
++        dir_path=QFileDialog.getExistingDirectory(self.lable_cn_btn,"choose lable_cn_btn","\\")
++        stra=dir_path#.toUtf8()#unicode(dir_path.toUtf8(), 'utf-8', 'ignore')
++        self.lable_cnen_pathstr=stra
++        self.lable_cnen_textview.setText(stra)
++
++    def on_push_button_3_clicked(self):
++        dir_path=QFileDialog.getExistingDirectory(self.lable_cn_btn,"choose lable_cn_btn","\\")
++        stra=dir_path#.toUtf8()#unicode(dir_path.toUtf8(), 'utf-8', 'ignore')
++        self.inputdir_pathstr=stra
++        self.inputdir_textview.setText(stra)
++
++ 
++    def on_push_button_4_clicked(self):
++        dir_path=QFileDialog.getExistingDirectory(self.lable_cn_btn,"choose lable_cn_btn","\\")
++        stra=dir_path#.toUtf8()#unicode(dir_path.toUtf8(), 'utf-8', 'ignore')
++        self.outputdir_pathstr=stra
++        self.outputdir_textview.setText(stra)
++
++    def on_push_button_5_clicked(self):
++
++        self.conv_hanler(self,
++        self.lable_cn_pathstr,
++        self.lable_cnen_pathstr,
++        self.inputdir_pathstr,
++        self.outputdir_pathstr)
++        pass
++
++    def register_action_do_conv_hanler(self,conv_hanler):
++        self.conv_hanler=conv_hanler
++        pass
++
++    def log(self,stra):
++        import time
++        nowstr=time.strftime("[%Y-%m-%d %H:%M:%S]", time.localtime())
++        self.result_out_textview.appendPlainText(nowstr+stra)
++        pass
+\ No newline at end of file
+diff --git a/semantic_labelme2voc.py b/semantic_labelme2voc.py
+index 22a0d65..555d981 100644
+--- a/semantic_labelme2voc.py
++++ b/semantic_labelme2voc.py
+@@ -15,13 +15,24 @@ import PIL.Image
+ import labelme
+ import progressbar
+ 
+-def main():
+-    parser = argparse.ArgumentParser(
+-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+-    parser.add_argument('labels_file')
+-    parser.add_argument('in_dir', help='input dir with annotated files')
+-    parser.add_argument('out_dir', help='output dataset directory')
+-    args = parser.parse_args()
++def sem_l2v(args):
++    print('sem_l2v')
++    print(args)
++    args1={
++    'labels_file':args[0],
++    'in_dir':args[1],
++    'out_dir':args[2]}
++    from argparse import Namespace
++    ns = Namespace(**args1)
++    return sem_l2v_main(ns)
++
++def sem_l2v_main(args):
++    #parser = argparse.ArgumentParser(
++    #    formatter_class=argparse.ArgumentDefaultsHelpFormatter)
++    #parser.add_argument('labels_file')
++    #parser.add_argument('in_dir', help='input dir with annotated files')
++    #parser.add_argument('out_dir', help='output dataset directory')
++    #args = parser.parse_args()
+ 
+     if osp.exists(args.out_dir):
+         print('Output directory already exists:', args.out_dir)
+@@ -90,5 +101,5 @@ def main():
+             PIL.Image.fromarray(viz).save(out_viz_file)
+ 
+ 
+-if __name__ == '__main__':
+-    main()
++#if __name__ == '__main__':
++ #   main()

@@ -1,4 +1,4 @@
-from launcher_ui import Ui_Dialog
+from .launcher_ui import Ui_Dialog
 from PyQt5.QtWidgets import QFileDialog
 from pathlib import Path
 
