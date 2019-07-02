@@ -19,18 +19,29 @@ from labelme import utils
 from labels_cn_en import en_cn_dict_build  # convert chinese label to english label
 
 
-def main():
-    parser = argparse.ArgumentParser(
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+def bbox_l2v(args):
+    print('bbox_l2v')
+    args1={
+    'labels_file':args[0],
+    'en_cn_file':args[1],
+    'in_dir':args[2],
+    'out_dir':args[3]}
+    from argparse import Namespace
+    ns = Namespace(**args1)
+    return bbox_l2v_main(ns)
+
+def bbox_l2v_main(args):
+    #parser = argparse.ArgumentParser(
+    #    formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     # labels file
-    parser.add_argument('labels_file')
+    #parser.add_argument('labels_file')
     # en-cn file
-    parser.add_argument('en_cn_file')
+    #parser.add_argument('en_cn_file')
     # directory where contains labelme annotated json files
-    parser.add_argument('in_dir', help='input dir with annotated files')
+    #parser.add_argument('in_dir', help='input dir with annotated files')
     # output directory for dataset
-    parser.add_argument('out_dir', help='output dataset directory')
-    args = parser.parse_args()
+    #parser.add_argument('out_dir', help='output dataset directory')
+    #args = parser.parse_args()
 
     # build a chinese-english label convert dict
     (cn2ens, en2cns) = en_cn_dict_build(args.en_cn_file)
@@ -42,9 +53,15 @@ def main():
     # remove output dir manually when exists
     if osp.exists(args.out_dir):
         print('Output directory already exists:', args.out_dir)
-        quit(1)
+        import shutil,time
+        t = time.time()
+        ts=str(int(t))
+        shutil.move(args.out_dir,args.out_dir+ts)
+    #else:
+    os.makedirs(args.out_dir+"")
+        #quit(1)
     # make voc format directories
-    os.makedirs(args.out_dir)
+
     os.makedirs(osp.join(args.out_dir, 'JPEGImages'))
     os.makedirs(osp.join(args.out_dir, 'Annotations'))
     os.makedirs(osp.join(args.out_dir, 'AnnotationsVisualization'))
@@ -193,6 +210,6 @@ def main():
             f.write(lxml.etree.tostring(xml, pretty_print=True))
 
 
-if __name__ == '__main__':
-    # begin
-    main()
+#if __name__ == '__main__':
+#    # begin
+#    main()

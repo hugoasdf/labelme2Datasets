@@ -1,5 +1,15 @@
 # Datasets Conversion：Labelme -> PascalVOC format -> MS COCO format
 
+useage cmd:
+pip install labelme
+pip install progressbar2
+
+pip install sklearn
+pip install lxml
+pip install xmltodict
+python launcher.py
+
+
 ## Annotation Tool and Two Common Dataset Format
 
 Labelme is a common annotation tool.

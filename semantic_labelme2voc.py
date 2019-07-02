@@ -20,8 +20,8 @@ def sem_l2v(args):
     print(args)
     args1={
     'labels_file':args[0],
-    'in_dir':args[1],
-    'out_dir':args[2]}
+    'in_dir':args[2],
+    'out_dir':args[3]}
     from argparse import Namespace
     ns = Namespace(**args1)
     return sem_l2v_main(ns)
@@ -36,8 +36,14 @@ def sem_l2v_main(args):
 
     if osp.exists(args.out_dir):
         print('Output directory already exists:', args.out_dir)
-        quit(1)
-    os.makedirs(args.out_dir)
+        import shutil,time
+        t = time.time()
+        ts=str(int(t))
+        shutil.move(args.out_dir,args.out_dir+ts)
+    #else:
+    os.makedirs(args.out_dir+"")
+        #quit(1)
+    
     os.makedirs(osp.join(args.out_dir, 'JPEGImages'))
     os.makedirs(osp.join(args.out_dir, 'SegmentationClass'))
     os.makedirs(osp.join(args.out_dir, 'SegmentationClassPNG'))
@@ -46,7 +52,7 @@ def sem_l2v_main(args):
 
     class_names = []
     class_name_to_id = {}
-    for i, line in enumerate(open(args.labels_file).readlines()):
+    for i, line in enumerate(open(args.labels_file,'r', encoding='UTF-8').readlines()):
         class_id = i - 1  # starts with -1
         class_name = line.strip()
         class_name_to_id[class_name] = class_id

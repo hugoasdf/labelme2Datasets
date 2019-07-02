@@ -102,17 +102,27 @@ def voc_xml2coco_json(root_dir, xml_files, json_file):
         f.write(json_string)
     print("Completed. ")
 
+def voc2coco(imgset_file,anno_dir,outputjson_file):
+    print('sem_l2v')
+    args1={
+    'imgset_file':imgset_file,
+    'anno_dir':anno_dir,
+    'json_file':outputjson_file}
+    from argparse import Namespace
+    ns = Namespace(**args1)
+    return voc2coco_main(ns)
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+def voc2coco_main(args):
+#if __name__ == '__main__':
+    #parser = argparse.ArgumentParser(
+    #    formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     # voc image-set file
-    parser.add_argument('imgset_file', help='voc image set to convert')
+    #parser.add_argument('imgset_file', help='voc image set to convert')
     # directory where contains labelme annotated json files
-    parser.add_argument('anno_dir', help='voc dataset annotations directory')
+    #parser.add_argument('anno_dir', help='voc dataset annotations directory')
     # output directory for dataset
-    parser.add_argument('json_file', help='output coco json file')
-    args = parser.parse_args()
+    #parser.add_argument('json_file', help='output coco json file')
+    #args = parser.parse_args()
 
     # get xml list
     xml_list = list()
